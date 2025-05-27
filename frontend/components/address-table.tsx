@@ -27,6 +27,7 @@ import {
     ChevronRight,
     ChevronsLeft,
     ChevronsRight,
+    LucideIcon,
 } from "lucide-react"
 import { toast } from "sonner"
 
@@ -51,7 +52,7 @@ export function AddressTable({ data, selectedAddresses, onSelectionChange, maxSe
         () => [
             columnHelper.display({
                 id: "select",
-                header: ({ table }) => (
+                header: () => (
                     <div className="flex items-center">
                         <span className="text-xs font-medium">Select</span>
                     </div>
@@ -105,7 +106,7 @@ export function AddressTable({ data, selectedAddresses, onSelectionChange, maxSe
             columnHelper.accessor("validationStatus", {
                 header: "Validation Status",
                 cell: ({ getValue }) => {
-                    const status = getValue()
+                    const status = getValue() as "valid" | "invalid" | "duplicate";
                     const config = {
                         valid: {
                             icon: CheckCircle,
@@ -137,8 +138,17 @@ export function AddressTable({ data, selectedAddresses, onSelectionChange, maxSe
             columnHelper.accessor("mintStatus", {
                 header: "Mint Status",
                 cell: ({ getValue, row }) => {
-                    const status = getValue()
-                    const config = {
+                    type MintStatus = "unminted" | "pending" | "minted";
+                    type StatusConfig = {
+                        [key in MintStatus]: {
+                            icon: LucideIcon;
+                            color: string;
+                            label: string;
+                            animate?: boolean;
+                        }
+                    };
+                    const status = getValue() as MintStatus;
+                    const config: StatusConfig = {
                         unminted: {
                             icon: Clock,
                             color: "bg-gray-100 text-gray-800 border-gray-200",
@@ -157,7 +167,7 @@ export function AddressTable({ data, selectedAddresses, onSelectionChange, maxSe
                         },
                     }
 
-                    const { icon: Icon, color, label, animate } = config[status]
+                    const { icon: Icon, color, label, animate = false } = config[status];
 
                     return (
                         <Badge variant="outline" className={color}>
@@ -168,7 +178,7 @@ export function AddressTable({ data, selectedAddresses, onSelectionChange, maxSe
                 },
             }),
         ],
-        [selectedAddresses, onSelectionChange, maxSelections],
+        [selectedAddresses, onSelectionChange, maxSelections,],
     )
 
     const table = useReactTable({
