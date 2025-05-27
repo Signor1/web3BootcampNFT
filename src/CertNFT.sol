@@ -10,9 +10,7 @@ contract BootcampNFT is ERC721, Ownable {
 
     event Minted(address indexed to, uint256 indexed tokenId);
 
-    constructor(
-        string memory baseURI
-    ) ERC721("AnambraWeb3BootcampGraduate", "AW3BCG") Ownable(msg.sender) {
+    constructor(string memory baseURI) ERC721("AnambraWeb3BootcampGraduate", "AW3BCG") Ownable(msg.sender) {
         _baseTokenURI = baseURI;
     }
 
