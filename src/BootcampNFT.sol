@@ -29,7 +29,7 @@ contract BootcampNFT is ERC721Enumerable, Ownable {
                 '"name": "Certificate of Completion",',
                 '"description": "This certificate is proudly presented by Anambra Web3 Conference for successfully completing the Annual Web3 BootCamp held in March 2025.",',
                 '"image": "ipfs://QmXuUvLsit6jAdBYeN9aJ5Cr1cAcBiPAxeR3VJ1vgS5rhz",',
-                '"youtube_url": "https://www.youtube.com/@AnambraTechiesCommunity"',
+                '"youtube_url": "https://www.youtube.com/watch?v=AW48_8vKeCg"',
                 "}"
             )
         );
