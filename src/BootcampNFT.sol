@@ -5,15 +5,16 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 contract BootcampNFT is ERC721Enumerable, Ownable {
-    constructor() ERC721("Anambra Web3 Bootcamp Graduate", "AW3BCG") Ownable(msg.sender) {}
+    constructor() payable ERC721("Anambra Web3 Bootcamp Graduate", "AW3BCG") Ownable(msg.sender) {}
 
-    function mint(address recipient) external onlyOwner {
-        _safeMint(recipient, totalSupply());
+    function mint(address recipient) external payable onlyOwner {
+        _mint(recipient, totalSupply());
     }
 
-    function batchMint(address[] calldata recipients) external onlyOwner {
-        for (uint256 i; i < recipients.length;) {
-            _safeMint(recipients[i], totalSupply());
+    function batchMint(address[] calldata recipients) external payable onlyOwner {
+        uint256 length = recipients.length;
+        for (uint256 i; i < length;) {
+            _mint(recipients[i], totalSupply());
             unchecked {
                 ++i;
             }
@@ -23,7 +24,7 @@ contract BootcampNFT is ERC721Enumerable, Ownable {
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         _requireOwned(tokenId);
         return string(
-            abi.encodePacked(
+            bytes.concat(
                 "{",
                 '"name": "Certificate of Completion",',
                 '"description": "This certificate is proudly presented by Anambra Web3 Conference for successfully completing the Annual Web3 BootCamp held in March 2025.",',
