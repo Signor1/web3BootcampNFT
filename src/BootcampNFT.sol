@@ -12,8 +12,8 @@ contract BootcampNFT is ERC721Enumerable, Ownable {
     }
 
     function batchMint(address[] calldata recipients) external payable onlyOwner {
-        uint256 length = recipients.length;
-        for (uint256 i; i < length;) {
+        uint256 recipientsLength = recipients.length;
+        for (uint256 i; i < recipientsLength;) {
             _mint(recipients[i], totalSupply());
             unchecked {
                 ++i;
